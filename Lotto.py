@@ -44,8 +44,9 @@ def mode_1():
 def mode_2():
     f_path = "list.txt"
     if(os.path.isfile(f_path)):
-        #with open("list.txt","r") as f:
-        pass
+        with open("list.txt","r") as f:
+            print(f)
+        
     else:
         print("저장되어 있는 번호가 없습니다.")
 
