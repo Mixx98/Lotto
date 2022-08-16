@@ -5,10 +5,35 @@ import pandas as pd
 import random as rd
 import os
 
-def compare(NUM,numList):
+def rank(count,NUM_b):
+    if(count==6):
+        return "\033[31m1등\033[0m"
+    elif(count==5):
+        if(NUM_b!=-1):
+            return "\033[31m2등\033[0m"
+        else:
+            return "\033[31m3등\033[0m"
+    elif(count==4):
+        return "\033[31m4등\033[0m"
+    elif(count==3):
+        return "\033[31m5등\033[0m"
+    else:
+        return "꽝"
+
+def compare(NUM,NUM_b,numList):
     count=0
     NUM=list(NUM)
-    print(NUM)
+    print("")
+    for i in numList:
+        i2=i.replace('[', ' ')
+        i2=i2.replace(']', ',')
+        i=i.rstrip('\n')
+        for j in range(6):
+            if(i2.find(' '+NUM[j]+',')!=-1):
+                count+=1
+        print(i+" >> "+rank(count,i.find(NUM_b)))
+        count=0
+    
 
 def pick(f,n):
     arr=[]
@@ -49,16 +74,17 @@ def mode_1():
 def mode_2():
     f_path = "list.txt"
     if(os.path.isfile(f_path)):
-        NUM = input("당첨 번호를 입력해 주세요(1,2,3,4,5,6)\n>> ")
-        NUM.maketrans({
-         ',': '',
+        NUM = input("당첨 번호 6개를 입력해 주세요(1,2,3,4,5,6)\n>> ")
+        NUM_b = input("\n보너스 번호 를 입력해 주세요\n>> ")
+        NUM2=NUM.maketrans({
          ' ': '',
          '[': '',
          ']': '',
         })
+        NUM2=NUM.translate(NUM2).split(',')
         with open("list.txt","r") as f:
             numList=f.readlines()
-        compare(NUM.translate(NUM),numList)
+        compare(NUM2,NUM_b,numList)
         
     else:
         print("저장되어 있는 번호가 없습니다.")
@@ -69,7 +95,7 @@ def mode_3():
     if(os.path.isfile(f_path)):
         with open("list.txt","r") as f:
             numLists = f.read()
-            print(numLists)
+            print(numLists.rstrip('\n'))
     else:
         print("저장되어 있는 번호가 없습니다.")
 
@@ -78,7 +104,7 @@ table=table.iloc[3:,13:19]
 mode=0
 
 while(1):
-    mode = int(input("\n1. 번호 뽑기\n2. 번호 비교하기\n3. 저장된 번호 보기\n4. 종료\n>> "))
+    mode = int(input("\n\n1. 번호 뽑기\n2. 번호 비교하기\n3. 저장된 번호 보기\n4. 종료\n>> "))
     print("")
 
     if(mode==1):
