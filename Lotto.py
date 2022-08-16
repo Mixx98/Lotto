@@ -5,6 +5,11 @@ import pandas as pd
 import random as rd
 import os
 
+def compare(NUM,numList):
+    count=0
+    NUM=list(NUM)
+    print(NUM)
+
 def pick(f,n):
     arr=[]
     for i in range(n):
@@ -44,8 +49,16 @@ def mode_1():
 def mode_2():
     f_path = "list.txt"
     if(os.path.isfile(f_path)):
+        NUM = input("당첨 번호를 입력해 주세요(1,2,3,4,5,6)\n>> ")
+        NUM.maketrans({
+         ',': '',
+         ' ': '',
+         '[': '',
+         ']': '',
+        })
         with open("list.txt","r") as f:
-            print(f)
+            numList=f.readlines()
+        compare(NUM.translate(NUM),numList)
         
     else:
         print("저장되어 있는 번호가 없습니다.")
