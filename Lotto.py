@@ -5,7 +5,7 @@ import pandas as pd
 import random as rd
 import os
 
-def rank(count,NUM_b):
+def rank(count,NUM_b): #등수를 구해주는 함수
     if(count==6):
         return "\033[31m1등\033[0m"
     elif(count==5):
@@ -20,7 +20,7 @@ def rank(count,NUM_b):
     else:
         return "꽝"
 
-def compare(NUM,NUM_b,numList):
+def compare(NUM,NUM_b,numList): #당첨번호와 저장된 번호들을 비교하는 함수
     count=0
     NUM=list(NUM)
     print("")
@@ -35,7 +35,7 @@ def compare(NUM,NUM_b,numList):
         count=0
     
 
-def pick(f,n):
+def pick(f,n): #랜덤한 6자리를 뽑아주는 함수
     arr=[]
     for i in range(n):
         while(1):
@@ -50,7 +50,7 @@ def pick(f,n):
         f.write(str(numList)+"\n")
         
 
-def mode_1():
+def mode_1(): #랜덤한 6자리 번호를 뽑고 저장하는 함수
     n = int(input("몇 개 필요하신가요?\n>> "))
     print("")
 
@@ -71,8 +71,9 @@ def mode_1():
             pick(f,n)
     
 
-def mode_2():
+def mode_2(): #저장된 번호들을 당첨번호와 비교하는 함수
     f_path = "list.txt"
+
     if(os.path.isfile(f_path)):
         NUM = input("당첨 번호 6개를 입력해 주세요(1,2,3,4,5,6)\n>> ")
         NUM_b = input("\n보너스 번호 를 입력해 주세요\n>> ")
@@ -82,6 +83,7 @@ def mode_2():
          ']': '',
         })
         NUM2=NUM.translate(NUM2).split(',')
+        
         with open("list.txt","r") as f:
             numList=f.readlines()
         compare(NUM2,NUM_b,numList)
@@ -90,14 +92,19 @@ def mode_2():
         print("저장되어 있는 번호가 없습니다.")
 
 
-def mode_3():
+def mode_3(): #저장된 번호들을 출력하는 함수
     f_path = "list.txt"
+
     if(os.path.isfile(f_path)):
         with open("list.txt","r") as f:
             numLists = f.read()
             print(numLists.rstrip('\n'))
     else:
         print("저장되어 있는 번호가 없습니다.")
+
+
+#--------------------------------------------------------------------------------
+#메인함수
 
 table = pd.read_csv('./excel.csv',encoding='euc-kr',header=None)
 table=table.iloc[3:,13:19]
