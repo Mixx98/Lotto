@@ -25,8 +25,7 @@ def compare(NUM,NUM_b,numList): #당첨번호와 저장된 번호들을 비교�
     NUM=list(NUM)
     print("")
     for i in numList:
-        i2=i.replace('[', ' ')
-        i2=i2.replace(']', ',')
+        i2=i.replace('[', ' ').replace(']', ',')
         i=i.rstrip('\n')
         for j in range(6):
             if(i2.find(' '+NUM[j]+',')!=-1):
@@ -77,16 +76,12 @@ def mode_2(): #저장된 번호들을 당첨번호와 비교하는 함수
     if(os.path.isfile(f_path)):
         NUM = input("당첨 번호 6개를 입력해 주세요(1,2,3,4,5,6)\n>> ")
         NUM_b = input("\n보너스 번호 를 입력해 주세요\n>> ")
-        NUM2=NUM.maketrans({
-         ' ': '',
-         '[': '',
-         ']': '',
-        })
-        NUM2=NUM.translate(NUM2).split(',')
+
+        NUM=NUM.replace(' ', '').split(',')
         
         with open("list.txt","r") as f:
             numList=f.readlines()
-        compare(NUM2,NUM_b,numList)
+        compare(NUM,NUM_b,numList)
         
     else:
         print("저장되어 있는 번호가 없습니다.")
@@ -111,18 +106,18 @@ table=table.iloc[3:,13:19]
 mode=0
 
 while(1):
-    mode = int(input("\n\n1. 번호 뽑기\n2. 번호 비교하기\n3. 저장된 번호 보기\n4. 종료\n>> "))
+    mode = input("\n\n1. 번호 뽑기\n2. 번호 비교하기\n3. 저장된 번호 보기\n4. 종료\n>> ")
     print("")
 
-    if(mode==1):
+    if(mode=='1'):
         mode_1()
-    elif(mode==2):
+    elif(mode=='2'):
         mode_2()
-    elif(mode==3):
+    elif(mode=='3'):
         mode_3()
-    elif(mode==4):
+    elif(mode=='4'):
         break
     else:
-        print("다시 입력해 주세요\n")
+        print("다시 입력해 주세요")
 
 
